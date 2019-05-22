@@ -1,6 +1,8 @@
     
 import React, { Component } from "react";
 import axios from "axios";
+import './style.css';
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 class App extends React.Component {
   
@@ -35,8 +37,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div> 
-        <body bgcolor="antiquewhite">
+      <div>
+        <link ref="style.css"></link>
         <ul>
           {this.state.restaurants.map(restaurant => (
             <li key = {restaurant.id}> 
@@ -49,7 +51,6 @@ class App extends React.Component {
             </li>
           ))}
         </ul>
-        </body>
       </div>
     );
   }
