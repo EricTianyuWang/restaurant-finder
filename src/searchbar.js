@@ -3,14 +3,14 @@ import React from "react";
 import './style.css';
 import Api from './api';
 
-let submited = false
 
 export default class Searchbar extends React.Component {
   
   constructor(props) {
 		super(props)
 		this.state = {
-			searchTerm: ""
+			searchTerm: "",
+			submitted: false
 		}
   }
 
@@ -20,8 +20,16 @@ export default class Searchbar extends React.Component {
 	}
 	
 	sendSearchTerm = (event) => {
-		this.setState({searchTerm: event.target.value})
-		submited = true
+		this.setState({
+			searchTerm: event.target.value,
+			submitted: true
+		})
+	}
+
+	revertChange = () => {
+		this.setState({
+			submitted: false
+		})
 	}
 
   render() {
@@ -36,7 +44,7 @@ export default class Searchbar extends React.Component {
 					onClick={this.sendSearchTerm} 
 					value={this.state.searchTerm}>Search
 				</button>
-				<Api searchTerm = {this.state.searchTerm}/>
+				<Api searchTerm={this.state.searchTerm} submitted={this.state.submitted} revertChange={this.revertChange}/>
     	</div>
     );
   }
