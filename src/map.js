@@ -1,31 +1,36 @@
-import React, { Component } from "react";
+    
+import React from "react";
+import './style.css';
 import {Map, CircleMarker, TileLayer} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import './style.css';
 
+const API_KEY = process.env.REACT_APP_API_KEY;
+const center = [38.0344444, -78.5072222]
 
-
-export default class MyMap extends React.Component {
-    /*
-    componentDidMount() {
-    // create map
-    this.map = L.map('map', {
-      center: [0, 0],
-      zoom: 16,
-    });
-    L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', {
-        attribution: '<a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
-        minZoom: 5,
-        maxZoom: 19
-    }).addTo(this.map);
+export default class Api extends React.Component {
+  
+  constructor(props) {
+    super(props)
   }
-  */
+
   render() {
-    return <Map center={[0,0]} zoom={[3]}>
-        <TileLayer
-          attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+    return (
+      <div>
+        <Map
+          style={{ height: "750px", width: "100%" }}
+          zoom={16}
+          center={center}>
+          <TileLayer url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+          {this.props.restaurants.map((restaurant) => {
+            return (
+              <CircleMarker
+                center={[restaurant.geometry.location.lat, restaurant.geometry.location.lng]}
+                radius={10}
+                color="green"/>
+              )})}
         </Map>
+      </div>
+    );
   }
 }
+
