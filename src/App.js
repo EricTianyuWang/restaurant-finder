@@ -1,7 +1,5 @@
     
 import React from 'react';
-import Api from './api';
-import List from './list';
 import Searchbar from './searchbar';
 
 export default class App extends React.Component {
@@ -16,8 +14,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Restaurants Currently Open</h1>
-        <Searchbar/>
+        <h1><b><font size="10" color="#8B4000">Restaurants Currently Open</font></b><Searchbar/></h1>
       </div>
     );
   }

@@ -3,4 +3,24 @@ body {
     background-color: antiquewhite;
 }
 
+input {
+    padding: 12px 20px;
+    margin: 12px 0;
+    height: 21px;
+    border: none;
+    background-color: wheat;
+    outline: none;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+input[type=text]:focus {
+    
+}
+
+button {
+    padding: 12px 20px;
+    background-color: antiquewhite;
+    outline: none;
+}
 

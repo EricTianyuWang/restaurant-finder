@@ -34,17 +34,21 @@ export default class Searchbar extends React.Component {
 
   render() {
     return (
-      <div>	
+      <div>
     		<input 
 					type="text" 
 					onChange={this.handleChange} 
 					value={this.state.searchTerm} 
-					placeholder="Search for categories.."/>
+					placeholder="Search by keyword..."/>
 				<button 
 					onClick={this.sendSearchTerm} 
 					value={this.state.searchTerm}>Search
 				</button>
-				<Api searchTerm={this.state.searchTerm} submitted={this.state.submitted} revertChange={this.revertChange}/>
+				<Api 
+					searchTerm={this.state.searchTerm} 
+					submitted={this.state.submitted} 
+					revertChange={this.revertChange}
+				/>
     	</div>
     );
   }

@@ -16,17 +16,20 @@ export default class Api extends React.Component {
   }
 
   myUpdate() {
-    let url = "https://cors-anywhere-hclaunch.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=38.033554,-78.507980&radius=1500&type=restaurant&key=" + API_KEY
+    let url = "https://cors-anywhere-hclaunch.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+    + "location=38.033554,-78.507980"
+    + "&radius=1500&type=restaurant&key=" + API_KEY
     axios
       .get(url)
       .then(res => {
         let restaurant_list = res.data.results;
         let open_restaurant_list = [];
-        
+        let searchTerm = this.props.searchTerm.toLowerCase();
+
         for (let i = 0; i < restaurant_list.length; i++) {
           if (restaurant_list[i].opening_hours.open_now !== undefined 
             && restaurant_list[i].opening_hours.open_now
-            && restaurant_list[i].name.includes(this.props.searchTerm)) {
+            && this.fitsCriteria(JSON.stringify(restaurant_list[i]), searchTerm)) {
             open_restaurant_list.push(restaurant_list[i]);
           }
         }
@@ -37,26 +40,12 @@ export default class Api extends React.Component {
       })
   }
 
+  fitsCriteria(category, key) {
+    return category.toLowerCase().includes(key.toLowerCase());
+  }
+
   componentDidMount() {
-    let url = "https://cors-anywhere-hclaunch.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=38.033554,-78.507980&radius=1500&type=restaurant&key=" + API_KEY
-    axios
-      .get(url)
-      .then(res => {
-        let restaurant_list = res.data.results;
-        let open_restaurant_list = [];
-        
-        for (let i = 0; i < restaurant_list.length; i++) {
-          if (restaurant_list[i].opening_hours.open_now !== undefined 
-            && restaurant_list[i].opening_hours.open_now
-            && restaurant_list[i].name.toLowerCase().includes(this.props.searchTerm.toLowerCase())) {
-            open_restaurant_list.push(restaurant_list[i]);
-          }
-        }
-        
-        this.setState({
-           restaurants: open_restaurant_list
-        })
-      })
+    this.myUpdate();
   }
 
   render() {
