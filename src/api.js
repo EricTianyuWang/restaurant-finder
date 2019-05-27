@@ -5,21 +5,35 @@ import List from './list';
 import MyMap from './map';
 
 const API_KEY = process.env.REACT_APP_API_KEY;
+let lat;
+let lng;
 
 export default class Api extends React.Component {
   
   constructor(props) {
     super(props)
     this.state = {
-      restaurants: []
+      restaurants: [],
+      lat: 0,
+      lng: 0
     };
   }
 
   myUpdate() {
-    let url = "https://cors-anywhere-hclaunch.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
-    + "location=38.033554,-78.507980"
-    + "&radius=1500&type=restaurant&key=" + API_KEY
+    //geocoding a city to get lat and long
     axios
+      .get("https://cors-anywhere-hclaunch.herokuapp.com/https://maps.googleapis.com/maps/api/geocode/json?address=" + this.props.locationToSearch
+        +"&sensor=false&key=" + API_KEY)
+      .then(res => {
+        lat = res.data.results[0].geometry.location.lat
+        lng = res.data.results[0].geometry.location.lng
+        console.log(lat+","+lng)
+        let url = "https://cors-anywhere-hclaunch.herokuapp.com/https://maps.googleapis.com/maps/api/place/nearbysearch/json?"
+          + "location="+lat+","+lng
+          + "&radius=2000&type=restaurant&key=" + API_KEY
+
+      console.log(url)
+      axios
       .get(url)
       .then(res => {
         let restaurant_list = res.data.results;
@@ -37,6 +51,7 @@ export default class Api extends React.Component {
         this.setState({
            restaurants: open_restaurant_list
         })
+      })
       })
   }
 

@@ -10,7 +10,8 @@ export default class Searchbar extends React.Component {
 		super(props)
 		this.state = {
 			searchTerm: "",
-			submitted: false
+			submitted: false,
+			searchLocation: "Jack Jouett, VA 22903"
 		}
   }
 
@@ -48,6 +49,7 @@ export default class Searchbar extends React.Component {
 					searchTerm={this.state.searchTerm} 
 					submitted={this.state.submitted} 
 					revertChange={this.revertChange}
+					locationToSearch={this.state.searchLocation}
 				/>
     	</div>
     );
